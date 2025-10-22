@@ -1,0 +1,57 @@
+- type: entity
+  id: StationAlarmAccessController
+  parent: BaseEntity
+  name: Station Alarm Access Controller
+  components:
+    - type: alarmAccess
+      alarmLevels:
+        red:
+          targetAccess:
+            - Security
+          grantAccessGroups:
+            - Cargo
+            - Engineering
+            - Medical
+            - Research
+            - Service
+          blacklistGroups:
+            - Command  
+          blacklist:
+            - Chemistry
+            - Atmospherics
+
+        gamma:
+          targetAccess:
+            - Security
+          grantAccessGroups:
+            - AllAccess
+          blacklist:
+            - Captain
+
+        yellow:
+          targetAccess:
+            - Engineering
+          grantAccessGroups:
+            - Cargo
+            - Medical
+            - Research
+            - Service
+          blacklistGroups:
+            - Command
+          blacklist:
+            - Chemistry
+            - Atmospherics
+
+        violet:
+          targetAccess:
+            - Medical
+          grantAccessGroups:
+            - Cargo
+            - Engineering
+            - Research
+            - Service
+          blacklistGroups:
+            - Command  
+          blacklist:
+            - Chemistry
+            - Atmospherics

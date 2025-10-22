@@ -979,4 +979,44 @@ public sealed class AccessReaderSystem : EntitySystem
 
         return localizedNames;
     }
+
+    #region AccessListsOriginal
+
+    /// <summary>
+    /// Makes a copy of the current accesses in AccessListsOriginal.
+    /// </summary>
+    public void TrySnapshotOriginal(Entity<AccessReaderComponent> ent)
+    {
+        if (ent.Comp.AccessListsOriginal is not null)
+            return;
+
+        ent.Comp.AccessListsOriginal = DeepCloneAccessLists(ent.Comp.AccessLists);
+        Dirty(ent);
+    }
+
+    /// <summary>
+    /// Restores accesses from AccessListsOriginal to AccessLists
+    /// </summary>
+    public bool TryRestoreOriginal(Entity<AccessReaderComponent> ent)
+    {
+        var original = ent.Comp.AccessListsOriginal;
+        if (original is null)
+            return false;
+
+        SetAccesses(ent, DeepCloneAccessLists(original));
+
+        ent.Comp.AccessListsOriginal = null;
+        Dirty(ent);
+        return true;
+    }
+
+    private static List<HashSet<ProtoId<AccessLevelPrototype>>> DeepCloneAccessLists(List<HashSet<ProtoId<AccessLevelPrototype>>> src)
+    {
+        var copy = new List<HashSet<ProtoId<AccessLevelPrototype>>>(src.Count);
+        foreach (var set in src)
+            copy.Add(set);
+        return copy;
+    }
+
+    #endregion
 }
