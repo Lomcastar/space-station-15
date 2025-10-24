@@ -124,7 +124,6 @@ public sealed class AlarmAccessSystem : EntitySystem
             if (_access.AreAccessTagsAllowed(effectiveBlacklist, accessComp))
                 continue;
 
-            // Добавляем уровни одним батчем
             _access.TryAddAccesses(accessEnt.Value, accessInfo.TargetAccess);
         }
     }
